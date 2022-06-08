@@ -1,18 +1,17 @@
 function condenseArrayToNumber(arr) {
-    let index = arr.length;
-    let finalSum = 0;
-    let condenced = [];
-    let smt = arr.length-1;
-    if (index < 1) {
-
+    if(arr.length === 1) {
+        console.log(`${arr}`);
     } else {
-        for (let a = smt; a >= 1; a--) {
-                
-            for (let i = 0; i < index-1; i++) {
-                condenced[i] = arr[i] + arr[i+1];
-            }
-
+    while(arr.length > 1) {
+        let condencedArr = [];
+        for (let i = 0; i < arr.length-1; i++) {
+            condencedArr[i] = arr[i] + arr[i + 1];
         }
+        arr = condencedArr;
     }
+    console.log(Number(arr));
+}
+ 
 }
 condenseArrayToNumber([5,0,4,1,2])
+condenseArrayToNumber([2, 10, 3])
