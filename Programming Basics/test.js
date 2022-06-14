@@ -1,17 +1,12 @@
-function solve(year, month, day) {
-  if (day < 31) {
-   day += 1;
-  } else {
-    day = 1;
-    month += 1
+function solve(input) {
+  for(i = 0; i < input.length; i++) {
+    let aSCIITableValue = input.charCodeAt(i);
+
+  if (!((aSCIITableValue >= 65 && aSCIITableValue <= 90) || 
+        (aSCIITableValue >= 97 && aSCIITableValue <= 122) || 
+        (aSCIITableValue >= 48 && aSCIITableValue <= 57))) {
+        console.log("Password must consist only of letters and digits");
+        }
   }
-
-  if (month > 12) {
-    month = 1;
-  }
-
-console.log(new Date(year, month, day)); 
-
-
 }
-solve(2016, 9, 31);
+solve('logIn$');
