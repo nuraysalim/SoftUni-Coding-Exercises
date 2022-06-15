@@ -1,13 +1,14 @@
 function nxNMatrix(nNumber) {
-    let matrix = "";
+    let matrix = [];
 
     for(let i =0; i < nNumber; i++) {
+        let row = [];
 
         for(let j = 0; j < nNumber; j++) {
-            matrix += `${nNumber} `;
+           row.push(nNumber);
         }
-        matrix += `${''}\n`;
+        matrix.push(row.join(' '));
     }
-    console.log(matrix);
+     console.log(matrix.join('\n'));
 }
 nxNMatrix(7)
