@@ -4,18 +4,33 @@ function ladybugs(commands) {
     for(let j = 0; j < fieldSizeIndexes; j++) {
         fieldArrPositions.push('')
     }
-    let ladybugStartPosition = commands.shift().split(' ');
-    for(let k = 0; k < ladybugStartPosition.length; k++){
-        
-    }
-    console.log(ladybugStartPosition);
-
+    let ladybugPosition = commands.shift().split(' ');
+    //  console.log(ladybugStartPosition);
+    //console.log(fieldArrPositions);
+    
     for(let i = 0; i < commands.length; i++) {
+
+        for(let k = 0; k < ladybugPosition.length; k++){
+            let index = ladybugPosition[k];
+            fieldArrPositions[index] = 'occupied';
+        }
       
-        let [currIndex, direction, newIndex] = commands[i].split(' ')
+        let [currIndex, direction, newIndex] = commands[i].split(' ');
+
+        for(let el of fieldArrPositions){
+            let changeOfPosition;
+            if (currIndex == 0) {
+                changeOfPosition = fieldArrPositions.shift();
+                fieldArrPositions.unshift('');
+            } else {
+                fieldArrPositions.slice(currIndex, currIndex + 1);
+                
+                
+            }
+        }
 
         switch (direction) {
-            case 'right':
+            case 'right': 
                 break;
             case 'left':
                 break;
