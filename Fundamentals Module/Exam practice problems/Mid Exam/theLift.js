@@ -1,29 +1,37 @@
 function theLift(input) {
-    let peopleInQueue = input[0];
-    let spotsInWagons = input[1].split(' ');
-    let index = spotsInWagons.length
-    
-    for(let i = 0; i < index; i++) {
-        let freeSpots = 4 - spotsInWagons[i];
-        if(peopleInQueue > 4) {
-            spotsInWagons[i] = 4;
-            peopleInQueue -= freeSpots;
-        } else {
-            spotsInWagons[i] = peopleInQueue;
-            peopleInQueue = 0;
-        }
-}
+  let peopleInQueue = Number(input.shift());
+  let wagonState = input.shift().split(" ").map(Number);
+  let index = wagonState.length;
 
-    for(let el of spotsInWagons) {
-        if(el == 0 && peopleInQueue == 0) {
-            console.log(`The lift has empty spots!
-${spotsInWagons.join(' ')}`);
-        } else if (peopleInQueue > 0 ){
-            console.log(`There isn't enough space! ${peopleInQueue} people in a queue!
-${spotsInWagons.join(' ')}`);
+  let isFullAndNoQueue = true;
+
+  for (let i = 0; i < index; i++) {
+    let currWagon = wagonState[i];
+
+    while (currWagon !== 4) {
+        currWagon++;
+        peopleInQueue--;
+        if(peopleInQueue === 0) {
             break;
         }
     }
+    wagonState[i] = currWagon;
+    if (peopleInQueue === 0) {
+        break;
+    }
+  }
+
+  let isFull = wagonState.filter(w => w !== 4);
+ 
+    if (isFull.length === 0 && peopleInQueue === 0) {
+        console.log(wagonState.join(' '));
+    } else if (isFull.length !== 0) {
+        console.log('The lift has empty spots!');
+        console.log(wagonState.join(' '));
+    } else {
+        console.log(`There isn't enough space! ${peopleInQueue} people in a queue!`);
+        console.log(wagonState.join(' '));
+    }
 }
-//theLift(["15", "0 0 0 0 0"])
-theLift(["20", "0 2 0"])
+theLift(["15", "0 0 0 0 0"]);
+//theLift(["20", "0 2 0"])
