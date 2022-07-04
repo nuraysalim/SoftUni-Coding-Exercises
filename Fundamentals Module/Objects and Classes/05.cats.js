@@ -9,6 +9,7 @@ function cats(catsData) {
             console.log(`${this.name}, age ${this.age} says Meow`);
         }
     }
+    
     for(let catData of catsData){
         let token = catData.split(' ');
        let catName = token[0];
