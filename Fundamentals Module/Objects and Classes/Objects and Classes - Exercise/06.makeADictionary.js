@@ -1,36 +1,28 @@
-function makeADictionary(arr) {
-    let dictionary = {};
+function makeADictionary(input) {
+  let obj = {};
 
-    for(let definition of arr) {
-        let obj = JSON.parse(definition);
-        let keysOfObj = Object.keys(obj)
-        dictionary[keysOfObj] = Object.values(obj);
-        
-        if (dictionary.hasOwnProperty(Object.keys(definition))) {
-            let changeDefinition = Object.keys(definition);
-            dictionary.changeDefinition = Object.values(obj);
-        }
+  for (const line of input) {
+    let tokens = JSON.parse(line);
 
-        function sortArray(x, y) {
-            let name = Object.keys(definition);
-            let name2 = Object.keys(dictionary);
-
-            if(x.name < y.name2) {
-                return -1;
-            }
-            if (x.name > y.name2) {
-                return 1;
-            }
-            return 0;
-        }
-        let s = dictionary.sort(sortArray)
-        console.log(s);
+    for (const key in tokens) {
+      obj[key] = tokens[key];
     }
+  }
 
+  let entriesOfObj = Object.entries(obj);
+  let sortedAlphabetically = entriesOfObj.sort((a, b) => {
+    (keyA = a[0]), (keyB = b[0]);
+    return keyA.localeCompare(keyB);
+  });
+
+  for (let definition of sortedAlphabetically) {
+    console.log(`Term: ${definition[0]} => Definition: ${definition[1]}`);
+  }
 }
 makeADictionary([
-    '{"Coffee":"A hot drink made from the roasted and ground seeds (coffee beans) of a tropical shrub."}',
-    '{"Bus":"A large motor vehicle carrying passengers by road, typically one serving the public on a fixed route and for a fare."}',
-    '{"Boiler":"A fuel-burning apparatus or container for heating water."}',
-    '{"Tape":"A narrow strip of material, typically used to hold or fasten something."}',
-    '{"Microphone":"An instrument for converting sound waves into electrical energy variations which may then be amplified, transmitted, or recorded."}'])
+  '{"Cup":"A small bowl-shaped container for drinking from, typically having a handle"}',
+  '{"Cake":"An item of soft sweet food made from a mixture of flour, fat, eggs, sugar, and other ingredients, baked and sometimes iced or decorated."} ',
+  '{"Watermelon":"The large fruit of a plant of the gourd family, with smooth green skin, red pulp, and watery juice."} ',
+  '{"Music":"Vocal or instrumental sounds (or both) combined in such a way as to produce beauty of form, harmony, and expression of emotion."} ',
+  '{"Art":"The expression or application of human creative skill and imagination, typically in a visual form such as painting or sculpture, producing works to be appreciated primarily for their beauty or emotional power."} ',
+]);
