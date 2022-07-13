@@ -21,7 +21,7 @@ function wordTracker(arrayInput) {
   });
 
   for (const sortedWord of sortingInDesOrder) {
-    console.log(sortedWord[0], " - ", sortedWord[1]);
+    console.log(sortedWord[0], "-", sortedWord[1]);
   }
 }
 
