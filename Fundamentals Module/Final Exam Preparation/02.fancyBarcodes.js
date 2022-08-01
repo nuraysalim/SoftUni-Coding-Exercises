@@ -1,5 +1,5 @@
 function fancyBarcodes(input) {
-  let countOfBarCodes = input.shift();
+  let countOfBarCodes = Number(input.shift());
   let patternForBarCode = /@[#]+[A-Z][A-Za-z0-9]{4,}[A-Z]@[#]+/g;
   let productGroupRegex = /\d/g;
 
