@@ -12,6 +12,6 @@ function destinationMapper(input) {
   console.log(`Destinations: ${destinations.join(", ")}`);
   console.log(`Travel Points: ${points}`);
 }
-destinationMapper("|Hawai|/Cyprus/=Invalid/invalid==i5valid=/I5valid/=i=");
+destinationMapper("=Hawai=/Cyprus/=Invalid/invalid==i5valid=/I5valid/=i=");
 console.log("---------");
 destinationMapper("ThisIs some InvalidInput");

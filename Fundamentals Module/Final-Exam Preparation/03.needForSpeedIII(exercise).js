@@ -26,11 +26,11 @@ function needForSpeedThree(input) {
             `${car} driven for ${thirdParam} kilometers. ${fourthParam} liters of fuel consumed.`
           );
         }
-
         if (cars[car]["mileage"] >= 100000) {
           console.log(`Time to sell the ${car}!`);
           delete cars[car];
         }
+
         break;
 
       case "Refuel":
@@ -50,10 +50,9 @@ function needForSpeedThree(input) {
 
         if (cars[car]["mileage"] < 10000) {
           cars[car]["mileage"] = 10000;
-          break;
+        } else {
+          console.log(`${car} mileage decreased by ${thirdParam} kilometers`);
         }
-
-        console.log(`${car} mileage decreased by ${thirdParam} kilometers`);
 
         break;
     }
