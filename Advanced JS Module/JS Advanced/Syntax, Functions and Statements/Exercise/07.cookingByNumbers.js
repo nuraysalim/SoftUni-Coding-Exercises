@@ -1,6 +1,4 @@
-function cookingByNumber(num, com1, com2, com3, com4, com5) {
-    let number = Number(num);
-    const arrOfComms = [com1, com2, com3, com4, com5];
+function cookingByNumber(num, ...arrOfComms) {
 
     for (const command of arrOfComms) {
         switch (command) {
@@ -22,3 +20,11 @@ function cookingByNumber(num, com1, com2, com3, com4, com5) {
 cookingByNumber('32', 'chop', 'chop', 'chop', 'chop', 'chop')
 console.log('-------------');
 cookingByNumber('9', 'dice', 'spice', 'chop', 'bake', 'fillet')
+
+
+/* More advanced way of solving this problem:
+- Create a function that executes the commands for U;
+- Call the function 5 times and save the values in a way that changes the input Num;
+Bonus:
+* Using the spread operator iterate through commands using the .forEach();
+*/ 
