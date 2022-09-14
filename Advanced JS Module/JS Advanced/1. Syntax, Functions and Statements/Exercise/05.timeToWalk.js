@@ -7,5 +7,7 @@ function timeToWalk(steps, footprint, speed) {
     - Pay attention what happens when minutes are more than 60;
     - And format the results in such a way to be double digits;  
     */
+
+    
 }
 timeToWalk(4000, 0.60, 5)
