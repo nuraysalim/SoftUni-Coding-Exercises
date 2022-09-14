@@ -5,3 +5,8 @@ function previousDay(year, month, day) {
 }
 previousDay(2016, 9, 30)
 previousDay(2016, 10, 1)
+
+/* Another way of solving the problem: 
+-Use a format -> date as string(interpolation 14/9/2022)
+-Use .setDate() to get the date one day before
+*/
