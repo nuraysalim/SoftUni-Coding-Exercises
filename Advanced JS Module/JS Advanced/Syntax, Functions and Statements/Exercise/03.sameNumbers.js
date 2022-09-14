@@ -2,6 +2,7 @@ function sameNums(num) {
     let sum = 0;
     let previousDigit = num.toString().split('')[0];
     let areSame;
+    
  let res = num.toString().split('').forEach(digit => {
    sum += Number(digit);
 
@@ -17,3 +18,8 @@ function sameNums(num) {
  console.log(sum);
 }
 sameNums(222222223)
+
+//Another solution:
+/*- Transform num to String;
+  - Use normal for loop
+*/
