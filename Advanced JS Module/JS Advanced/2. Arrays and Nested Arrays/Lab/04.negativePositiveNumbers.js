@@ -7,12 +7,7 @@ function posNegNum(arr) {
             res.push(num)
         }
     }
-    
-    
-    for (const num of res) {
-        console.log(num);
-    }
-    
+        console.log(res.join('\n'));
 }
 posNegNum([7, -2, 8, 9])
 console.log('--------------');
