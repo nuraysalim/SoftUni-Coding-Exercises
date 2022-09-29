@@ -1,5 +1,37 @@
-function solve(params) {
-    
+function solve() {
+   let mage = (name) => {
+    let state = {
+        name,
+        health: 100,
+        mana: 100
+    };
+    return Object.assign(state, canCast(state));
+   };
+
+   let fighter = (name) => {
+    let state = {
+        name,
+        health: 100,
+        stamina: 100
+    };
+    return Object.assign(state, canFight(state));
+   };
+
+   let canCast = (state) => ({
+    cast: (spell) => {
+    state.mana--;
+    console.log(`${state.name} cast ${spell}`);
+    }
+   });
+
+   let canFight = (state) => ({
+    fight: () => {
+        state.stamina--;
+        console.log(`${state.name} slashes at the foe!`);
+    }
+   });
+
+   return {'mage': mage, 'fighter': fighter}
 }
 let create = solve();
 const scorcher = create.mage("Scorcher");
