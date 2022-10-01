@@ -2,15 +2,17 @@
 <html>
     <head></head>
     <body>
-        <table border="1">
-            <tr><th>Name</th><th>Town</th></tr>
-            <tr><td>Eve</td><td>Sofia</td></tr>
-            <tr><td>Nick</td><td>Varna</td></tr>
-            <tr><td>Didi</td><td>Ruse</td></tr>
-            <tr><td>Tedy</td><td>Varna</td></tr>
+        <script src="06.sumTable.js"></script>
+        <table>
+            <tbody>
+              <tr><th>Product</th><th>Cost</th></tr>
+              <tr><td>Beer</td>   <td>2.88</td></tr>
+              <tr><td>Fries</td>  <td>2.15</td></tr>
+              <tr><td>Burger</td> <td>4.59</td></tr>
+              <tr><td>Total:</td> <td id="sum"></td></tr>
+            </tbody>
           </table>
-          <button onclick="colorizeRows()">Colorize</button>  
-          <script src="05.colorizeTable.js"></script>        
+          <button onclick="sum()">Sum</button>                 
     </body>
 </html>
   
