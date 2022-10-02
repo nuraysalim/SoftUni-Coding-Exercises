@@ -7,7 +7,7 @@ function solve() {
   let output = [];
 
   switch (command) {
-    case 'Camel case': 
+    case 'Camel Case': 
     output.push(text.shift());
     
       for (const word of text) {
@@ -16,7 +16,7 @@ function solve() {
         output.push(firstLetter + theRestofWord);
       };
       break;
-    case 'Pascal case':
+    case 'Pascal Case':
       for (const word of text) {
         let firstLetter = word.slice(0, 1).toUpperCase();
         let theRestofWord = word.slice(1);
@@ -24,7 +24,9 @@ function solve() {
       };
       break;
     default: output = 'Error!';
-    break;
+    document.getElementById('result').innerHTML = output;
+    return;
   }
 
+  document.getElementById('result').innerHTML = output.join('')
 }
