@@ -13,7 +13,7 @@ function search() {
          matchesCounter++;
       } else {
          liRow.style.textDecoration = 'none';
-         liRow.style.fontWeight = '';
+         liRow.style.fontWeight = 'normal';
       }
    }
 
