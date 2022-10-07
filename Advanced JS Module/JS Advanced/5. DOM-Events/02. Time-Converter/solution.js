@@ -1,4 +1,10 @@
 function attachEventsListeners() {
+    let parent = document.getElementsByTagName('main');
 
-    console.log('TODO:...');
+    parent.addEventListener('click', convert);
+
+    function convert() {
+        let input;
+    }
+
 }
