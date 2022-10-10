@@ -1,4 +1,4 @@
-//My solution:
+//My solution - Judge -> 0/100:
 // function solve() {
 //   let textAreas = document.getElementsByTagName('textarea');
 //   let buttons = document.getElementsByTagName('button');
@@ -68,6 +68,8 @@
 //   }
 // }
 
+
+// Not my solution - Judge -> 100/100
 function solve() {
   let buttons = document.getElementsByTagName('button');
 
