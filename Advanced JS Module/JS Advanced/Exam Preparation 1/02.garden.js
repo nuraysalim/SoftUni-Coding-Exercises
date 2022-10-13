@@ -54,7 +54,7 @@ class Garden {
     }
 
     if(!currentPlant.ripe) {
-        throw new Error (`The {plantName} cannot be harvested before it is ripe.`);
+        throw new Error (`The ${plantName} cannot be harvested before it is ripe.`);
     }
 
     this.plants = this.plants.filter(plant => plant.plantName !== plantName);
