@@ -1,11 +1,11 @@
 let {assert} = require('chai');
-let Package = require('../12.paymentPackage');
+let PaymentPackage = require('../12.paymentPackage');
 
 describe("PaymentPackage", () => {
     describe("Testing the constructor", ()=> {
         let paymentPackage;
         beforeEach(() => {
-            paymentPackage = new Package("Fotev", 10);
+            paymentPackage = new PaymentPackage("Fotev", 10);
         });
 
         it("Name should be correct", () => {
@@ -30,7 +30,7 @@ describe("PaymentPackage", () => {
     describe("Testing the getters", () => {
         let paymentPackage;
         beforeEach(() => {
-            paymentPackage = new Package("Fotev", 10);
+            paymentPackage = new PaymentPackage("Fotev", 10);
         });
 
         it("Name is correct", () => {
@@ -52,30 +52,30 @@ describe("PaymentPackage", () => {
 
     describe("Testing the setters", ()=>{
         it("Set incorrect type for name", ()=> {
-            assert.throw(()=>{new Package(10, 10)}, 'Name must be a non-empty string');
+            assert.throw(()=>{new PaymentPackage(10, 10)}, 'Name must be a non-empty string');
         });
 
         it("Set empty sting for name", ()=>{
-            assert.throw(()=>{new Package("", 10)}, 'Name must be a non-empty string');
+            assert.throw(()=>{new PaymentPackage("", 10)}, 'Name must be a non-empty string');
         });
 
         it('Set correct type for name', ()=>{
-            let paymentPackage = new Package('Fotev', 10);
+            let paymentPackage = new PaymentPackage('Fotev', 10);
             assert.equal(paymentPackage.name, "Fotev", 'Name should be Fotev');
             paymentPackage.name = 'Hristo'
             assert.equal(paymentPackage.name, 'Hristo', "Name should be set to 'Hristo'")
         });
 
         it('Set incorrect value', ()=>{
-            assert.throw(()=>{new Package("Hristo", "Fotev")}, 'Value must be a non-negative number');
+            assert.throw(()=>{new PaymentPackage("Hristo", "Fotev")}, 'Value must be a non-negative number');
         });
 
         it('Set incorrect value - negative number', ()=>{
-            assert.throw(()=>{new Package("Hristo", -20)}, 'Value must be a non-negative number');
+            assert.throw(()=>{new PaymentPackage("Hristo", -20)}, 'Value must be a non-negative number');
         });
 
         it('Set correct type of value', ()=>{
-            let paymentPackage = new Package('Fotev', 10);
+            let paymentPackage = new PaymentPackage('Fotev', 10);
             assert.equal(paymentPackage.value, 10, 'Value should be equal to 10');
             paymentPackage.value = 20;
             assert.equal(paymentPackage.value, 20, 'Value should be equal to 20');
@@ -84,31 +84,31 @@ describe("PaymentPackage", () => {
         });
 
         it('Set incorrect VAT type', ()=> {
-            let paymentPackage = new Package('Fotev', 10);
+            let paymentPackage = new PaymentPackage('Fotev', 10);
             assert.throw(()=>{paymentPackage.VAT = 'Fotev'}, 'VAT must be a non-negative number');
         });
 
         it('Set a negative number to VAT', ()=>{
-            let paymentPackage = new Package('Fotev', 10);
+            let paymentPackage = new PaymentPackage('Fotev', 10);
             assert.throw(()=>{paymentPackage.VAT = -20}, 'VAT must be a non-negative number');
         });
 
         it('Set correct type and value of numbet to VAT', ()=>{
-            let paymentPackage = new Package('Fotev', 10);
+            let paymentPackage = new PaymentPackage('Fotev', 10);
             assert.equal(paymentPackage.VAT, 20);
             paymentPackage.VAT = 30
             assert.equal(paymentPackage.VAT, 30);
         });
 
         it('Set non-boolean to active', ()=>{
-            let paymentPackage = new Package('Fotev', 10);
+            let paymentPackage = new PaymentPackage('Fotev', 10);
             assert.equal(paymentPackage.active, true);
             
             assert.throw(()=>{paymentPackage.active = '1'}, 'Active status must be a boolean');
         });
 
         it('Set false value to active', ()=>{
-            let paymentPackage = new Package('Fotev', 10);
+            let paymentPackage = new PaymentPackage('Fotev', 10);
             paymentPackage.active = false;
             assert.equal(paymentPackage.active, false);
         });
@@ -117,7 +117,7 @@ describe("PaymentPackage", () => {
     describe('Testing the class method toString', ()=>{
         let paymentPackage;
         beforeEach(() => {
-            paymentPackage = new Package("Fotev", 10);
+            paymentPackage = new PaymentPackage("Fotev", 10);
         });
 
         it("Test active state", ()=>{
