@@ -6,7 +6,7 @@ async function getInfo() {
     const ulElement = document.getElementById('buses');
 
     ulElement.innerHTML = "";
-    stopId.value = "";
+    infoElement.value = "";
 
     try {
         const response = await fetch(url);
