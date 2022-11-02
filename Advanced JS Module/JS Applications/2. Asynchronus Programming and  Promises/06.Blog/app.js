@@ -5,6 +5,7 @@ function attachEvents() {
 
 async function getPosts() {
     const selectOp = document.getElementById('posts');
+    selectOp.innerHTML = "";
     const url = `http://localhost:3030/jsonstore/blog/posts`;
 
     const response = await fetch(url);
