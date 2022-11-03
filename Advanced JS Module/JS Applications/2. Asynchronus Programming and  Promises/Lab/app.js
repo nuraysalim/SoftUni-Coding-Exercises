@@ -24,7 +24,13 @@ function creatRecipe(recipe) {
     recipeElement.addEventListener('click', () => {
         fetch(`${baseUrl}/jsonstore/cookbook/details/${recipe._id}`)
             .then(res => res.json())
-            .then(details => console.log(details))
+            .then(details => {
+                //  Problem: need to remove the event listeners
+                const main = document.querySelector('main');
+                main.innerHTML = '';
+
+                main.appendChild(renderDetailedRecipe(details));
+            })
     });
     debugger;
 
@@ -39,5 +45,30 @@ function creatRecipe(recipe) {
     `;
 
     return recipeElement
+}
+
+function renderDetailedRecipe(details) {
+    let recipeElement = document.createElement('article');
+
+    recipeElement.innerHTML = `
+    <h2>${details.name}</h2>
+    <div class="band">
+        <div class="thumb">
+            <img src=${details.img}>
+        </div>
+        <div class="ingredients">
+            <h3>Ingredients:</h3>
+            <ul>
+                ${details.ingredients.map(x => `<li>${x}</li>`).join('')}
+            </ul>
+        </div>
+    </div>
+    <div class="description">
+        <h3>Preparation:</h3>
+        ${details.steps.map(x => `<p>${x}</p>`).join('')}
+    </div>
+    `;
+
+    return recipeElement;
 }
 
