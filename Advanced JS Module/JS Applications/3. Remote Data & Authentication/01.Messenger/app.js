@@ -7,7 +7,6 @@ function renderMsg(data) {
     const textArea = document.getElementById('messages');
    const content = Object.values(data).map(entry => `${entry.author}: ${entry.content}`).join('\n');
     textArea.textContent = content;
-   debugger
 }
 
 function onSendMsg() {
