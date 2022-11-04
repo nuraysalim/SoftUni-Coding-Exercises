@@ -25,7 +25,7 @@ function creatRecipe(recipe) {
         fetch(`${baseUrl}/jsonstore/cookbook/details/${recipe._id}`)
             .then(res => res.json())
             .then(details => {
-                //  Problem: need to remove the event listeners
+                //  Problem: need to remove the event listener
                 const main = document.querySelector('main');
                 main.innerHTML = '';
 
