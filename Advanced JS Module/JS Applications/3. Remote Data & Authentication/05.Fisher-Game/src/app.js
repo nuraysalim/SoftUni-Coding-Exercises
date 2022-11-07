@@ -12,8 +12,8 @@ document.getElementById('logout').addEventListener('click', onLogOut);
 async function onLogOut() {
     const url = `http://localhost:3030/users/logout`;
 
-    const header = getHeader('GET', null);
-
+    const header = getHeader('GET');
+    debugger;
     const response = await fetch(url, header);
    sessionStorage.clear();
    onLoadHTML();
@@ -21,20 +21,66 @@ async function onLogOut() {
 }
 
 function onLoadHTML() {
-    const token = sessionStorage.getItem('accessToken');
+    let token;
+    try {
+        token = JSON.parse(sessionStorage.getItem('userData')).accessToken;
+    } catch {
+        token = undefined;
+    }
     const userName = document.querySelector('p.email span');
     const addBtn = document.querySelector('.add');
-
+    const fieldsetBtns = document.getElementById('main');
+   // const section = document.getElementById('home-view');
+debugger
     if(token){
         document.getElementById('guest').style.display = 'none';
         document.getElementById('user').style.display = 'inline-block';
-        userName.innerHTML = sessionStorage.getItem('email');
+        userName.textContent = JSON.parse(sessionStorage.getItem('userData')).email;
         addBtn.disabled = false;
+        fieldsetBtns.innerHTML = `
+        <legend>Catches</legend>
+        <div id="catches">
+            <div class="catch">
+                <label>Angler</label>
+                <input type="text" class="angler" value="Paulo Admorim">
+                <label>Weight</label>
+                <input type="text" class="weight" value="636">
+                <label>Species</label>
+                <input type="text" class="species" value="Atlantic Blue Marlin">
+                <label>Location</label>
+                <input type="text" class="location" value="Vitoria, Brazil">
+                <label>Bait</label>
+                <input type="text" class="bait" value="trolled pink">
+                <label>Capture Time</label>
+                <input type="number" class="captureTime" value="80">
+                <button class="update" data-id="07f260f4-466c-4607-9a33-f7273b24f1b4">Update</button>
+                <button class="delete" data-id="07f260f4-466c-4607-9a33-f7273b24f1b4">Delete</button>
+            </div>
+            <div class="catch">
+                <label>Angler</label>
+                <input type="text" class="angler" value="John Does" disabled>
+                <label>Weight</label>
+                <input type="text" class="weight" value="554" disabled>
+                <label>Species</label>
+                <input type="text" class="species" value="Atlantic Blue Marlin" disabled>
+                <label>Location</label>
+                <input type="text" class="location" value="Buenos Aires, Argentina" disabled>
+                <label>Bait</label>
+                <input type="text" class="bait" value="trolled pink" disabled>
+                <label>Capture Time</label>
+                <input type="number" class="captureTime" value="120" disabled>
+                <button class="update" data-id="bdabf5e9-23be-40a1-9f14-9117b6702a9d" disabled>Update</button>
+                <button class="delete" data-id="bdabf5e9-23be-40a1-9f14-9117b6702a9d" disabled>Delete</button>
+            </div>
+        </div>
+        `
     } else {
         document.getElementById('guest').style.display = 'inline-block';
         document.getElementById('user').style.display = 'none';
-        userName.innerHTML = 'guest';
+        userName.textContent = 'guest';
         addBtn.disabled = true;
+        fieldsetBtns.innerHTML = "";
+        fieldsetBtns.textContent = 'Click to load catches';
     }
 }
 
@@ -65,7 +111,13 @@ async function onCreateCatch(body) {
 }
 
 function getHeader(method, body) {
-    const token = sessionStorage.getItem('accessToken')
+    let token;
+    try {
+        token = JSON.parse(sessionStorage.getItem('userData')).accessToken;
+    } catch {
+        token = undefined;
+    }
+    
     const header = {
         method: `${method}`,
         headers: {
