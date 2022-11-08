@@ -1,16 +1,71 @@
 window.addEventListener('DOMContentLoaded', onLoadHTML);
-document.getElementById('addForm').addEventListener('submit', createCatch);
 document.querySelector('.load').addEventListener('click', onLoadCatch);
 document.getElementById('logout').addEventListener('click', onLogOut);
-document.querySelector('.load').addEventListener('click', listOfCatches);
-document.querySelector('button.add').addEventListener('click', addCatch);
-const fieldset = document.getElementById('main');
 
-//USE JSON.parse(sessionStorage.getItem('userData')) to get all the fields and to check 
-//if we're loged or not;
-/* From index.html two btns musr dissapear - they are in a div with class= catch; and we must create new
- 
-*/
+async function updateAndDelete(e) {
+    const btn = e.target;
+    //debugger
+    if(btn.classList.value !== "update" && btn.classList.value !== "delete") {
+        return;
+    };
+
+    const id = btn.dataset.id;
+    const url = `http://localhost:3030/data/catches/${id}`;
+    let response;
+    let header;
+    
+    if(btn.classList.value === 'update') {
+        const body = getUpdatedInfo(btn); 
+        header = getHeader("PUT", body);
+   //debugger
+        try {
+        if(Object.values(body).some(x => x == '')){
+            throw new Error('All fields are required!');
+        };
+
+        response = await fetch(url, header);
+
+        if(response.ok !==  true) {
+            const error = await response.json();
+            throw new Error(error.message);
+        };
+        } catch (err) {
+            alert(err.message);
+        };
+
+    } else {
+        header = getHeader("DELETE");
+
+        try {
+            response = await fetch(url, header);
+    
+            if(response.ok !==  true) {
+                const error = await response.json();
+                throw new Error(error.message);
+            };
+        } catch (err) {
+            alert(err.message);
+        }
+    }
+
+    listOfCatches();
+   // debugger;
+}
+
+function getUpdatedInfo(btn){
+    let [angler, weight, species, location, bait, captureTime] = btn.parentElement.querySelectorAll('input');
+    
+
+    return {
+    "angler": angler.value,
+    "weight": weight.value,
+    "species": species.value,
+    "location": location.value,
+    "bait": bait.value,
+    "captureTime": captureTime.value
+}
+}
+
 
 async function onLogOut() {
     const url = `http://localhost:3030/users/logout`;
@@ -20,159 +75,76 @@ async function onLogOut() {
     const response = await fetch(url, header);
    sessionStorage.clear();
    onLoadHTML();
+   window.location = "./index.html";
 };
 
 function onLoadHTML() {
-    let token;
-    try {
-        token = JSON.parse(sessionStorage.getItem('userData')).accessToken;
-    } catch {
-        token = undefined;
-    }
+    const userData = JSON.parse(sessionStorage.getItem('userData'));
+
     const userName = document.querySelector('p.email span');
     const addBtn = document.querySelector('.add');
-
  
-    if(token){
+    if(userData){
         document.getElementById('guest').style.display = 'none';
         document.getElementById('user').style.display = 'inline-block';
-        userName.textContent = JSON.parse(sessionStorage.getItem('userData')).email;
+        userName.textContent = userData.email;
         addBtn.disabled = false;
-        fieldset.innerHTML = `
-        <legend>Catches</legend>
-                <div id="catches">
-                    <div class="catch">
-                        <label>Angler</label>
-                        <input type="text" class="angler" value="Paulo Admorim">
-                        <label>Weight</label>
-                        <input type="text" class="weight" value="636">
-                        <label>Species</label>
-                        <input type="text" class="species" value="Atlantic Blue Marlin">
-                        <label>Location</label>
-                        <input type="text" class="location" value="Vitoria, Brazil">
-                        <label>Bait</label>
-                        <input type="text" class="bait" value="trolled pink">
-                        <label>Capture Time</label>
-                        <input type="number" class="captureTime" value="80">
-                        <button class="update" data-id="07f260f4-466c-4607-9a33-f7273b24f1b4">Update</button>
-                        <button class="delete" data-id="07f260f4-466c-4607-9a33-f7273b24f1b4">Delete</button>
-                    </div>
-                    <div class="catch">
-                        <label>Angler</label>
-                        <input type="text" class="angler" value="John Does" disabled>
-                        <label>Weight</label>
-                        <input type="text" class="weight" value="554" disabled>
-                        <label>Species</label>
-                        <input type="text" class="species" value="Atlantic Blue Marlin" disabled>
-                        <label>Location</label>
-                        <input type="text" class="location" value="Buenos Aires, Argentina" disabled>
-                        <label>Bait</label>
-                        <input type="text" class="bait" value="trolled pink" disabled>
-                        <label>Capture Time</label>
-                        <input type="number" class="captureTime" value="120" disabled>
-                        <button class="update" data-id="bdabf5e9-23be-40a1-9f14-9117b6702a9d" disabled>Update</button>
-                        <button class="delete" data-id="bdabf5e9-23be-40a1-9f14-9117b6702a9d" disabled>Delete</button>
-                    </div>
-                </div>
-        `;
-        fieldset.style.border = '';
     } else {
         document.getElementById('guest').style.display = 'inline-block';
         document.getElementById('user').style.display = 'none';
         userName.textContent = 'guest';
         addBtn.disabled = true;
-        fieldset.innerHTML = "";
-        fieldset.style.border = 'none';
-        fieldset.textContent = 'Click to load catches';
-    }
+    };
+
+    document.querySelector('.load').addEventListener('click', listOfCatches);
+    //this can be moved to listOfCatches - maybe:
+    document.getElementById('main').addEventListener('click', updateAndDelete);
+    document.getElementById('addForm').addEventListener('submit', onCreateSubmit);
 };
 
 async function listOfCatches() {
-    const url = `http://localhost:3030/data/catches`;
-    const response = await fetch(url);
-    const data = await response.json();
-    debugger
-    loadAllCatches(data);
-};
-
-function loadAllCatches(objOfPeoplesCatches) {
-    
-    let legend = document.createElement('legend');
-    let divWrapper = document.createElement('div');
-    divWrapper.id = "catches";
-    fieldset.innerHTML = "";
-    fieldset.appendChild(legend);
-    fieldset.appendChild(divWrapper);
-    debugger
-    for (const person of objOfPeoplesCatches) {
-        const {angler, bait, captureTime, location, species, weight, _ownerId} = person;
-        const id = JSON.parse(sessionStorage.getItem('userData'));
-        let catchBtn;
-        
-        if(id !== _ownerId) {
-            catchBtn = `
-            <div class="catch">
-                <label>Angler</label>
-                    <input type="text" class="angler" value="${angler}" disabled>
-                <label>Weight</label>
-                    <input type="text" class="weight" value="${weight}" disabled>
-                <label>Species</label>
-                    <input type="text" class="species" value="${species}" disabled>
-                <label>Location</label>
-                    <input type="text" class="location" value="${location}" disabled>
-                <label>Bait</label>
-                    <input type="text" class="bait" value="${bait}" disabled>
-                <label>Capture Time</label>
-                    <input type="number" class="captureTime" value="${captureTime}" disabled>
-            <button class="update" data-id="bdabf5e9-23be-40a1-9f14-9117b6702a9d" disabled>Update</button>
-            <button class="delete" data-id="bdabf5e9-23be-40a1-9f14-9117b6702a9d" disabled>Delete</button>
-            </div>
-                 `;
-        } else {
-            catchBtn = `
-            <div class="catch">
-                <label>Angler</label>
-                    <input type="text" class="angler" value="${angler}">
-                <label>Weight</label>
-                    <input type="text" class="weight" value="${weight}">
-                <label>Species</label>
-                    <input type="text" class="species" value="${species}">
-                <label>Location</label>
-                    <input type="text" class="location" value="${location}">
-                <label>Bait</label>
-                    <input type="text" class="bait" value="${bait}">
-                <label>Capture Time</label>
-                    <input type="number" class="captureTime" value="${captureTime}">
-            <button class="update" data-id="07f260f4-466c-4607-9a33-f7273b24f1b4">Update</button>
-            <button class="delete" data-id="07f260f4-466c-4607-9a33-f7273b24f1b4">Delete</button>
-            </div>
-            `;
-        };
-
-        divWrapper.innerHTML += catchBtn;
+    if (!JSON.parse(sessionStorage.getItem('userData'))) {
+        return;
     };
 
+    const url = `http://localhost:3030/data/catches`;
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        document.getElementById('catches').replaceChildren(...data.map(createPreview));
+    } catch (err) {
+        alert(err.message)
+    }
+   
 };
 
-async function addCatch() {
-    const form = document.querySelector('button.add').parentNode.parentNode;
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
-    debugger;
-    const url = `http://localhost:3030/data/catches`;
-    const body = {
-        "angler": data.angler,
-        "weight": data.weight,
-        "species": data.species,
-        "location": data.location,
-        "bait": data.bait,
-        "captureTime": data.captureTime
-        };
-    const header = getHeader("POST", body);
+function createPreview(item) {
+    const userData = JSON.parse(sessionStorage.getItem('userData'));
 
-    const response = await fetch(url, header);
-    loadAllCatches();
-    debugger;
+    const {angler, weight, species, location, bait, captureTime, _id, _ownerId} = item;
+
+    const isOwner = (userData && _ownerId == userData.id);
+
+    const element = document.createElement('div');
+    element.classList.add('catch');
+    element.innerHTML = `
+    <label>Angler</label>
+                     <input type="text" class="angler" value="${angler}" ${!isOwner ? 'disabled' : ""}>
+                 <label>Weight</label>
+                     <input type="text" class="weight" value="${weight}" ${!isOwner ? 'disabled' : ""}>
+                 <label>Species</label>
+                     <input type="text" class="species" value="${species}" ${!isOwner ? 'disabled' : ""}>
+                 <label>Location</label>
+                     <input type="text" class="location" value="${location}" ${!isOwner ? 'disabled' : ""}>
+                 <label>Bait</label>
+                     <input type="text" class="bait" value="${bait}" ${!isOwner ? 'disabled' : ""}>
+                 <label>Capture Time</label>
+                     <input type="number" class="captureTime" value="${captureTime}" ${!isOwner ? 'disabled' : ""}>
+             <button class="update" data-id="${_id}" ${!isOwner ? 'disabled' : ""}>Update</button>
+             <button class="delete" data-id="${_id}" ${!isOwner ? 'disabled' : ""}>Delete</button>              
+    `;
+    return element;
 }
 
 async function onLoadCatch() {
@@ -180,26 +152,42 @@ async function onLoadCatch() {
 
     const response = await fetch(url);
     const data = await response.json();
-    //render method; 
+    
     return data;
 }
 
-function createCatch(e) {
+async function onCreateSubmit(e) {
     e.preventDefault();
+    
+    if(!JSON.parse(sessionStorage.getItem('userData'))) {
+        window.location = './login.html';
+        return;
+    }
+
     const form = e.target; 
     const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
-
-    onCreateCatch(data);
+    const info = Object.fromEntries(formData);
+    
+    try {
+        if(Object.values(info).some(x => x == '')){
+            throw new Error('All fields are required!');
+        };
+        const url = `http://localhost:3030/data/catches`;
+        const header = getHeader("POST", info);
+        const response = await fetch(url, header);
+       
+        if(response.ok !==  true) {
+            const error = await response.json();
+            throw new Error(error.message);
+        };
+        e.target.reset();
+        listOfCatches();
+    } catch (err){
+        alert(err.message); 
+    }
+    
 }
 
-async function onCreateCatch(body) {
-    const url = `http://localhost:3030/data/catches`;
-    const header = getHeader("POST", body);
-    const response = await fetch(url, header);
-    const data = await response.json();
-    return data;
-}
 
 function getHeader(method, body) {
     let token;
