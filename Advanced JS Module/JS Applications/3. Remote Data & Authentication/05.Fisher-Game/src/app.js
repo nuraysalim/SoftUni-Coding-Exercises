@@ -2,6 +2,8 @@ window.addEventListener('DOMContentLoaded', onLoadHTML);
 document.querySelector('.load').addEventListener('click', onLoadCatch);
 document.getElementById('logout').addEventListener('click', onLogOut);
 
+const catches = document.getElementById('catches');
+
 async function updateAndDelete(e) {
     const btn = e.target;
     //debugger
@@ -79,6 +81,7 @@ async function onLogOut() {
 };
 
 function onLoadHTML() {
+    catches.remove();
     const userData = JSON.parse(sessionStorage.getItem('userData'));
 
     const userName = document.querySelector('p.email span');
@@ -148,6 +151,8 @@ function createPreview(item) {
 }
 
 async function onLoadCatch() {
+    const form = document.getElementById('main')
+    form.appendChild(catches);
     const url = `http://localhost:3030/data/catches`;
 
     const response = await fetch(url);
