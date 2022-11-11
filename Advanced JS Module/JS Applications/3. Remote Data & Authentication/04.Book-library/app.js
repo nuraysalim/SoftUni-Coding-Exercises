@@ -13,7 +13,7 @@ async function loadBooks() {
        const arrayOfEls = Object.entries(data).map(createBookRow);
 
         const tbody = document.querySelector('tbody');
-        tbody.innerHTML = '';
+        tbody.innerHTML;
 
         for (const tr of arrayOfEls) {
             tbody.appendChild(tr);
@@ -82,6 +82,7 @@ async function addNewBook(e) {
         };
 
         response = await fetch(url, header);
+        h3.textContent = 'FORM';
         submitBtn.textContent = 'Submit';
     };
 
@@ -121,9 +122,9 @@ function editOrDelete(e) {
 };
 
     let btnId = null;
+    const h3 = document.querySelector('h3');
 
  function updateBook(title, author, id) {
-    const h3 = document.querySelector('h3');
     h3.textContent = "Edit FORM";
     const titleEl = document.querySelector('input[name=title]');
     titleEl.value = title;
