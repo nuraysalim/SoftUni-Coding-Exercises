@@ -6,28 +6,36 @@ const resultRoot = document.getElementById("result");
 document.querySelector('button').addEventListener('click', search)
 
 update()
-function searchTemplate(townsName) {
+function searchTemplate(townsName, match) {
    const ul = html`
       <ul>
-         ${townsName.map(townName => createLiTemplate(townName))}
+         ${townsName.map(townName => createLiTemplate(townName, match))}
       </ul>
    `;
    return ul;
 }
 
-function createLiTemplate(town) {
+function createLiTemplate(town, match) {
     return html`
-    <li>${town}</li>
+    <li class="${(match && town.includes(match)) ? "active" : ""}">${town}</li>
     `;
 };
 
-function update() {
-   const ul = searchTemplate(towns);
+function update(text) {
+   const ul = searchTemplate(towns, text);
    render(ul, townsRoot);
 }
 
-function search(e) {
-   //to be continued
+function search() {
+   const textNode = document.getElementById('searchText');
+   const text = textNode.value;
+   textNode.value = "";
+   update(text)
+   updateCount();
+};
 
+function updateCount() {
+   const count = document.querySelectorAll(".active").length;
+   const countEl = count ? html`<p>${count} matches found</p>` : "";
+   render(countEl, resultRoot);
 }
-
