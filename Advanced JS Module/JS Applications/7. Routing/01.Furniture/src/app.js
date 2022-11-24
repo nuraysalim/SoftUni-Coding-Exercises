@@ -1,3 +1,6 @@
+import {login, register} from "./api/data.js";
+
+
 import page from '../node_modules/page/page.mjs';
 import { catalogView } from './views/catalog.js';
 import { createView } from './views/create.js';
@@ -15,6 +18,8 @@ page('/edit/:id', editView);
 page('/login', loginView);
 page('/register', registerView);
 page('/my-furniture', myFurnitureView);
-page('/*', catalogView)
+page('*', catalogView);
+page.start();
 
-console.log("Works!");
+window.login = login;
+window.register = register;
