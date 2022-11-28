@@ -1,4 +1,4 @@
-const host =  "http://localhost:3030";
+const host =  "http://localhost:3030/";
  
 export async function get(url) {
     return await request(url, getOption("GET"));
@@ -28,6 +28,11 @@ async function request(url, options) {
         }
 
         try {
+
+            if(response.status === 204) {
+                return response;
+            };
+
             const data = await response.json();
             return data;
         } catch (error) {
@@ -48,7 +53,7 @@ function getOption(method, body) {
     };
 
     const user = JSON.parse(sessionStorage.getItem('userData'));
-
+    debugger;
     if (user) {
         const token = user.accessToken;
         options.headers["X-Authorization"] = token;

@@ -1,3 +1,5 @@
-export async function createView() {
-    console.log("Create!");
+
+
+export async function createView(ctx) {
+    
 }
