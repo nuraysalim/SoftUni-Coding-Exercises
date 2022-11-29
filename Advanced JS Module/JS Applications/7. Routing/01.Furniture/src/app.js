@@ -22,7 +22,7 @@ page('/edit/:id', renderMiddleWayer, editView);
 page('/login', renderMiddleWayer, loginView);
 page('/register', renderMiddleWayer, registerView);
 page('/my-furniture', renderMiddleWayer, myFurnitureView);
-page('*', catalogView);
+page('*', renderMiddleWayer, catalogView);
 
 
 page.start();

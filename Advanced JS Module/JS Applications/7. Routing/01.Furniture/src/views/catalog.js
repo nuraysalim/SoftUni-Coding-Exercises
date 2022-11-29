@@ -3,7 +3,8 @@ import { getAllItem } from "../api/data.js";
 
 export async function catalogView(ctx) {
     const items = await getAllItem();
-    ctx.render(catalogTemplate(items));
+    debugger
+    console.log(ctx.render(catalogTemplate(items)));
 };
 
 function catalogTemplate(data) {

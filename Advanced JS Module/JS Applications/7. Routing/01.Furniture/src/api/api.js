@@ -54,7 +54,7 @@ function getOption(method, body) {
 
     const user = JSON.parse(sessionStorage.getItem('userData'));
     debugger;
-    if (user) {
+    if (user && user.keys > 0) {
         const token = user.accessToken;
         options.headers["X-Authorization"] = token;
     };

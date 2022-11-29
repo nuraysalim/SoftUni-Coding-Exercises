@@ -6,10 +6,24 @@ export async function detailsView(ctx) {
    const item = await getItemById(id);
    const userData = JSON.parse(sessionStorage.getItem('userData'));
 
-   ctx.render(detailsTemp(item, userData._id === item._ownerId));
+   ctx.render(detailsTemp(item, userData._id === item._ownerId, deleteItemById));
 }
 
-function detailsTemp(item, isOwner) {
+async function deleteItemById(id) {
+
+    
+}
+
+function renderOwnerBtn(isOwner, deleteItemById) {
+    return isOwner ? html`                
+                    <div>
+                        <a href=”#” class="btn btn-info">Edit</a>
+                        <a @click=${deleteItemById.bind(null, item._id)} href=”javascript:void(0)” class="btn btn-red">Delete</a>
+                    </div>
+` : "";
+}
+
+function detailsTemp(item, isOwner, deleteItemById) {
     const itemImgNameArr = item.img.split('/');
     return html`
     <div class="row space-top">
@@ -32,14 +46,8 @@ function detailsTemp(item, isOwner) {
                 <p>Description: <span>${item.description}</span></p>
                 <p>Price: <span>${item.price} $</span></p>
                 <p>Material: <span>${item.material}</span></p>
-                ${ isOwner ? html`                
-                    <div>
-                        <a href=”#” class="btn btn-info">Edit</a>
-                        <a href=”#” class="btn btn-red">Delete</a>
-                    </div>` 
-                :
-                ""} 
+                ${renderOwnerBtn(isOwner, deleteItemById)}
             </div>
         </div>
     `
-}
+};
